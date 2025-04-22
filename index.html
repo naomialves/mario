@@ -1,14 +1,105 @@
-<html lang="pt">
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mario jump</title>
+    <title>Mario Game</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .controls {
+            position: fixed;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
+
+        .control-button {
+            width: 50px;
+            height: 50px;
+            background-color: #f0f0f0;
+            border: 2px solid #ccc;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        @media (max-width: 768px) {
+            .control-button {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+        }
+
+        .score {
+            position: fixed;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 24px;
+            font-family: Arial, sans-serif;
+            color: #333;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 <body>
-   
-    <div class=" game-board">
-
-        <img src="img/pipe.png" alt="">
+    <img src="./images/clouds.png" class="clouds" alt="Clouds">
+    <img src="./images/mario.png" class="mario" alt="Mario">
+    <img src="./images/pipe.png" class="pipe" alt="Pipe">
+    <img src="./images/game-over.png" class="game-over" alt="Game Over" style="display: none;">
+    <div class="score" id="score">Score: 0</div>
+    <div class="controls">
+        <div class="control-button" id="jump-button">↑</div>
     </div>
+    <script src="main.js"></script>
+    <script>
+        const jumpButton = document.getElementById('jump-button');
+        const mario = document.querySelector('.mario');
+
+        function jump() {
+            if (!mario.classList.contains('jump')) {
+                mario.classList.add('jump');
+                setTimeout(() => {
+                    mario.classList.remove('jump');
+                }, 500); // Ajuste o tempo conforme necessário
+            }
+        }
+
+        // Controles para dispositivos móveis
+        jumpButton.addEventListener('click', jump);
+
+        // Controles para teclado
+        document.addEventListener('keydown', (event) => {
+            if (event.code === 'Space' || event.code === 'ArrowUp') {
+                jump();
+            }
+        });
+
+        let score = 0;
+        const scoreElement = document.getElementById('score');
+
+        function updateScore() {
+            score++;
+            scoreElement.textContent = `Score: ${score}`;
+        }
+
+        // Atualiza a pontuação a cada segundo
+        setInterval(updateScore, 1000);
+    </script>
 </body>
 </html>
