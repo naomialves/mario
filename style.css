@@ -3,10 +3,110 @@ margin: 0;
 padding: 0;
 box-sizing: border-box;
 }
+
+body {
+    margin: 0;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: skyblue;
+    flex-direction: column;
+}
+
 .game-board { 
     width: 80%;
     height: 50px;
     border: 1px solid #333;
     margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+}
 
+.pipe {
+    width: 50px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    animation: movePipe 1.5s linear infinite;
+}
+
+.mario {
+    width: 50px;
+    position: absolute;
+    bottom: 0;
+    left: 50px;
+    transition: bottom 0.1s;
+}
+
+.mario.jump {
+    animation: jump 0.5s ease-out;
+}
+
+.jump {
+    animation: jump 500ms infinite ease-out;
+}
+
+.game-over {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 200px;
+    z-index: 10;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.control-button {
+    width: 60px;
+    height: 60px;
+    background-color: #f0f0f0;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    user-select: none;
+}
+
+@keyframes pipe-animation{
+    from {
+        right: -80px;
+    }
+    to {
+        right: 100%;
+    }
+}
+
+@keyframes jump {
+    0% { bottom: 0; }
+    50% { bottom: 150px; }
+    100% { bottom: 0; }
+}
+
+@keyframes movePipe {
+    from { right: -50px; }
+    to { right: 100vw; }
+}
+
+@media (max-width: 768px) {
+    .control-button {
+        width: 50px;
+        height: 50px;
+        font-size: 16px;
+    }
+
+    .game-board {
+        width: 100%;
+    }
 }
